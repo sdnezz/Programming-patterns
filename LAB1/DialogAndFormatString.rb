@@ -1,8 +1,21 @@
 #8 Вариант Дука В. 39/2
 #Знакомство с Ruby
 puts 'Hello, World!'
+#Запрашиваем имя пользователя или передаем аргумент ARGV cmd строки по умолчанию если не пуст
+if ARGV.empty?
+	puts "Как можно к вам обращаться?"
+	username = gets.chomp
+	#Удаляем пробел и перенос, если строка оказывается пуста, то аргумент - переменная окружения
+	if username.strip.empty?
+		username = ENV["USERNAME"]
+	end
+else
+	#если символ cmd строки пустой - переменная окружения - иначе ARGV[0] станет именем пользователя
+	username = ARGV[0].strip.empty? ? ENV["USERNAME"]: ARGV[0]
+end
+ARGV.clear
 #Приветствие пользователя с помощью форматирования строки
-username = ENV['USERNAME']
+
 puts "Привет, #{username}, какой твой любимый язык программирования?"
 favourite_language = gets.chomp
 
