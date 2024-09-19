@@ -1,9 +1,8 @@
 #Соглашения о наименованиях: snake_case, CamelCase, getter, setter=
 class Student
-	#Конструктор класса без дублирования кода с передачей блока для инициализации объекта
-	def initialize(&block)
-		#не прибегая к явному перечислению всех параметров
-		instance_eval &block
+	#Конструктор класса без дублирования кода с необязательными полями
+	def initialize(id:, last_name:, first_name:, middle_name:, phone:nil, telegram:nil, email:nil, git:nil)
+		@id, @last_name, @first_name, @middle_name, @phone, @telegram, @email, @git = id, last_name, first_name, middle_name, phone, telegram, email, git
 	end
 
 	#Автоматическое создание геттера и сеттера для каждого поля с помощью атрибута
