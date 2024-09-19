@@ -61,4 +61,17 @@ class Student
 	def git=(new_git)
 		@git = new_git
 	end
+
+	#Метод класса для отображения текущего состояния объекта
+	def show_object_information
+		puts "ID: #{@id}"
+		puts "Фамилия: #{@last_name}"
+		puts "Имя: #{@first_name}"
+		puts "Отчество: #{@middle_name}"
+		puts "Номер телефона: #{@phone}"
+		puts "Телеграм: #{@telegram}"
+		puts "Почта: #{@email}"
+		puts "GitHub: #{@git}"
+	end
 end
+
