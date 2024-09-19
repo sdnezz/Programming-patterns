@@ -1,9 +1,17 @@
 #Соглашения о наименованиях: snake_case, CamelCase, getter, setter=
 class Student
-	#Конструктор класса без дублирования кода с необязательными полями
-	def initialize(id:, last_name:, first_name:, middle_name:, phone:nil, telegram:nil, email:nil, git:nil)
-		@id, @last_name, @first_name, @middle_name, @phone, @telegram, @email, @git = id, last_name, first_name, middle_name, phone, telegram, email, git
-	end
+	#Конструктор с хэшем параметров
+  	def initialize(params = {})
+	    #fetch для обязательных полей
+	    @id = params.fetch(:id)
+	    @last_name = params.fetch(:last_name)
+	    @first_name = params.fetch(:first_name)
+	    @middle_name = params.fetch(:middle_name)
+	    @phone = params[:phone] || "Не указан"
+	    @telegram = params[:telegram] || "Не указан"
+	    @email = params[:email] || "Не указана"
+	    @git = params[:git] || "Не указан"
+  	end
 
 	#Автоматическое создание геттера и сеттера для каждого поля с помощью атрибута
 	attr_accessor :id, :last_name, :first_name, :middle_name, :phone, :telegram, :email, :git
