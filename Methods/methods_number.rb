@@ -43,17 +43,6 @@ def divisor_coprime_largest_count_numbers(original_number)
 		array_of_numbers.prepend(memory_number)
 	end
 	
-	#Функция нахождения НОД с передаваемыми делителем и цифрой из массива
-	# def NOD_Euclid(number_devisor, digit_of_number)
-	# 	while number_divisor != digit_of_number
-	# 		if number_divisor > digit_of_number
-	# 			number_divisor -= digit_of_number
-	# 		else 
-	# 			digit_of_number -= number_divisor
-	# 		end
-	# 	end
-	# 	digit_of_number
-	# end
 	#Рекурсивный вариант метода Евклида с помощью тернарного оператора
 	def NOD_Euclid(number_divisor, digit_of_number)
 		#Если цифра != 0, значит НОД равен делителю числа, иначе рекурсивно использовать новое значение первого числа и % остаток от делителя и цифры
@@ -73,7 +62,6 @@ def divisor_coprime_largest_count_numbers(original_number)
 			divisors.prepend(posible_divisor)
 		end
 	end
-	puts "Найдены делители: #{divisors.inspect}"
 	#Поиск подходящего делителя с наибольшим кол-ом взаимной простоты с цифрами числа
 	max_coprime = 0
 	answer_divisor = divisors.first
