@@ -32,3 +32,4 @@ student_valya = Student.new(
 student_example.show_object_information
 student_me.show_object_information
 student_valya.show_object_information
+student_example.validate_git_or_contact
