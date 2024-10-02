@@ -26,7 +26,7 @@ student_valya = Student.new(
 	first_name: "Валентин",
 	middle_name: "Кирилыч", 
 	phone: "+880053535358889",
-	telegram: "@kislayavalya"
+	telegram: "kislayavalya"
 	)
 #Вызываем метод вывода информации об объекте класса на экран
 student_example.show_object_information
