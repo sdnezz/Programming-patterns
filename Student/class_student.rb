@@ -82,7 +82,7 @@ class Student
 	            else
 	              "Контакты не указаны"
 	            end
-	  "#{short_name}; Git: #{@git}; Связь: #{phone} #{telegram} #{email}"
+	  "#{short_name}; Git: #{@git}; Контакты: #{phone} #{telegram} #{email}"
 	end
 
 	#Метод получения информации о контактах
@@ -95,7 +95,7 @@ class Student
 	end
 
 	def short_name
-		"#{@last_name} #{first_name[0]}.#{middle_name}."
+		"#{@last_name} #{first_name[0]}.#{middle_name[0]}."
 	end	
 
 	def self.id_valid?(id)
