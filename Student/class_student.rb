@@ -6,7 +6,7 @@ class Student
       @id = if params[:id] && Student.id_valid?(params[:id])
             	params[:id]
           	else
-            	"Не указано"
+            	nil
           	end
       @last_name = if params[:last_name] && Student.name_valid?(params[:last_name])
                    	params[:last_name]
@@ -23,32 +23,41 @@ class Student
                     else
                      raise ArgumentError, "Неверное отчество: #{params[:middle_name]}"
                     end
-    	# вызов метода проверки (валидации) на корректность телефона
+    	#вызов метода проверки (валидации) на корректность телефона
     	@phone = if params[:phone] && Student.phone_valid?(params[:phone])
                	params[:phone]
              	 else
-               	 "Не указано"
+               	 nil
              	 end
     	@telegram = if params[:telegram] && Student.telegram_valid?(params[:telegram])
                   	params[:telegram]
                 	else
-                  	"Не указано"
+                  	nil
                 	end
     	@email = if params[:email] && Student.email_valid?(params[:email])
                	params[:email]
              	 else
-               	 "Не указано"
+               	 nil
              	 end
     	@git = if params[:git] && Student.git_valid?(params[:git])
              		params[:git]
            	 else
-            	"Не указано"
+            	nil
            	 end
   	end
 
 	#Автоматическое создание геттера и сеттера для каждого поля с помощью атрибута
-	attr_accessor :id, :last_name, :first_name, :middle_name, :phone, :telegram, :email, :git
+	attr_accessor :id, :last_name, :first_name, :middle_name, :git
 
+	#Геттер для полей контактов
+	attr_reader :phone, :telegram, :email
+
+	def set_contacts(params = {})
+		# вызов метода проверки (валидации) на корректность телефона
+  	@phone = params[:phone] if params[:phone] && Student.phone_valid?(params[:phone])
+  	@telegram = params[:telegram] if params[:telegram] && Student.telegram_valid?(params[:telegram])
+  	@email = params[:email] if params[:email] && Student.email_valid?(params[:email])
+	end
 	# Валидация телефонного номера
 	def self.phone_valid?(phone)
   	if phone.length == 11
@@ -77,7 +86,7 @@ class Student
 
 	# Валидация электронной почты с использованием символов и домена)
 	def self.email_valid?(email)
-		email.match?(/^[\w+\.-]+@[\d\-.]+\.[a-z]$/i)
+		email.match?(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)
   end
 
 	# Валидация ссылки на GitHub - ссылка должна начинаться github.com/
@@ -87,11 +96,11 @@ class Student
 
 	#Валидация в виде предиката на наличие гита
 	def git_null?
-		@git != "Не указано"
+		@git != nil
 	end		
 	#Валидация с помощью предиката any? на наличие хотя бы одного контакта
 	def contacts_null?
-		[@phone, @telegram, @email].any? { |contact| contact != "Не указано"  }
+		[@phone, @telegram, @email].any? { |contact| contact != nil  }
 	end	
 	#Метод для двух валидаций - наличия контакта и гита\
 	def validate_git_or_contact

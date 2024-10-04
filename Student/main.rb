@@ -32,4 +32,8 @@ student_valya = Student.new(
 student_example.show_object_information
 student_me.show_object_information
 student_valya.show_object_information
+
+student_example.set_contacts(phone: "89998887766", email: "new_email@example.com")
 student_example.validate_git_or_contact
+student_example.show_object_information
+
