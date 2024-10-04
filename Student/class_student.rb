@@ -60,12 +60,12 @@ class Student
 	end
 	# Валидация телефонного номера
 	def self.phone_valid?(phone)
-  	if phone.length == 11
+  	if phone.to_s.length == 11
     # регулярное выражение с проверкой на наличие последовательности цифр \d+
-    	return phone.match?(/^\d+$/)
-  	elsif phone.length == 12
+    	return phone.to_s.match?(/^\d+$/)
+  	elsif phone.to_s.length == 12
     	# регулярное выражение с проверкой на наличие + и последовательности цифр \d+
-    	return phone.match?(/^\+\d+$/)
+    	return phone.to_s.match?(/^\+\d+$/)
   	else
     	return false
   	end

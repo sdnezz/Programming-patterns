@@ -7,7 +7,7 @@ student_example = Student.new(
 	last_name: "Петров",
 	first_name: "Петя",
 	middle_name: "Петрович", 
-	phone: "12345678901",
+	phone: 12345678901,
 	telegram: "@exmpltg",
 	email: "petr@example.com",
 	git: "github.com/example"
@@ -25,7 +25,7 @@ student_valya = Student.new(
 	last_name: "Кислый",
 	first_name: "Валентин",
 	middle_name: "Кирилыч", 
-	phone: "+880053535358889",
+	phone: 88005353531 ,
 	telegram: "kislayavalya"
 	)
 #Вызываем метод вывода информации об объекте класса на экран
@@ -33,7 +33,7 @@ student_example.show_object_information
 student_me.show_object_information
 student_valya.show_object_information
 
-student_example.set_contacts(phone: "89998887766", email: "new_email@example.com")
+student_example.set_contacts(phone: 89998887766, email: "new_email@example.com")
 student_example.validate_git_or_contact
 student_example.show_object_information
 
