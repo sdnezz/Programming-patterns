@@ -71,6 +71,33 @@ class Student
   	end
 	end
 
+	#Метод для получения краткой информации о студенте
+	def get_info
+	  contact = if !@phone.nil?
+	              "Телефон: #{@phone}"
+	            elsif !@telegram.nil?
+	              "Телеграм: #{@telegram}"
+	            elsif !@contact.nil?
+	              "Почта: #{@contact}"
+	            else
+	              "Контакты не указаны"
+	            end
+	  "#{short_name}; Git: #{@git}; Связь: #{phone} #{telegram} #{email}"
+	end
+
+	#Метод получения информации о контактах
+	def contacts_info
+		"Связь: #{phone} #{telegram} #{email}"
+	end
+
+	def git_info
+		@git
+	end
+
+	def short_name
+		"#{@last_name} #{first_name[0]}.#{middle_name}."
+	end	
+
 	def self.id_valid?(id)
 		id.to_s.match?(/^\d+$/)
   end
