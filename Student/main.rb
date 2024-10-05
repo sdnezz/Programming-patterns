@@ -28,7 +28,7 @@ student_valya = Student.new(
 	telegram: "@kislayavalya"
 	)
 #Вызываем метод вывода информации об объекте класса на экран
-student_example.show_object_information
+puts student_example
 #Изменяем контакты, только обращаясь к методу объекта класса для них
 student_example.set_contacts(phone: 89998887766, email: "new_email@example.com")
 #Проверяем наличие гита и контактов
@@ -46,5 +46,4 @@ puts student_example.get_info
 
 #Создаем наследник-объект класса с краткой информацией через обращение к суперклассу
 student_example_short = student_example.short_info
-student_example_short.object_information
-
+puts student_example_short

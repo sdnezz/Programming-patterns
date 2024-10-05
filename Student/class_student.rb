@@ -140,17 +140,19 @@ class Student
 	  raise ArgumentError, errors.join(", ") unless errors.empty?
 	end
 
-	#Метод класса для отображения текущего состояния объекта
-	def show_object_information
-		puts "ID: #{@id}"
-		puts "Фамилия: #{@last_name}"
-		puts "Имя: #{@first_name}"
-		puts "Отчество: #{@middle_name}"
-		puts "Номер телефона: #{@phone}"
-		puts "Телеграм: #{@telegram}"
-		puts "Почта: #{@email}"
-		puts "GitHub: #{@git}"
-	end
+	#Метод класса для отображения текущего состояния объекта с помощью переопределения строки
+	def to_s
+  	str = []
+  	str << "ID: #{@id}"
+		str << "Фамилия: #{@last_name}"
+		str << "Имя: #{@first_name}"
+		str << "Отчество: #{@middle_name}"
+		str << "Номер телефона: #{@phone}"
+		str << "Телеграм: #{@telegram}"
+		str << "Почта: #{@email}"
+		str << "GitHub: #{@git}"
+		str.join("; ")
+  end
 
 	#Метод для создания объекта-наследника суперкласса Student с краткой информацией
 	def short_info
@@ -171,11 +173,13 @@ class StudentShort < Student
   # Геттеры для полей
   attr_reader :id, :last_name_initials, :git, :contacts
 
-  # Вывод информации об экземпляре
-  def object_information
-    puts "ID: #{@id}"
-    puts "Фамилия И.О.: #{@last_name_initials}"
-    puts "GitHub: #{@git}"
-    puts "#{@contacts}"
+  # Вывод информации об экземпляре c помощью переопределения метода строки
+  def to_s
+  	str = []
+  	str << "ID: #{@id}"
+    str << "Фамилия И.О.: #{@last_name_initials}"
+    str << "GitHub: #{@git}"
+    str << "#{@contacts}"
+    str.join("; ")
   end
 end
