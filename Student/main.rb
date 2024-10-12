@@ -1,6 +1,6 @@
 #Подключаем класс студентов из отдельного файла
 require_relative 'class_student'
-#Создаем несколько объектов класса с разными комбинациями необязательных полей
+#Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
 	id: 1,
 	last_name: "Петров",
@@ -8,7 +8,7 @@ student_example = Student.new(
 	middle_name: "Петрович", 
 	phone: 12345678901,
 	telegram: "@exmpltg",
-	email: "petr@example.com",
+	# email: "petr@example.com",
 	git: "github.com/example"
 	)
 student_me = Student.new(
@@ -31,8 +31,9 @@ student_valya = Student.new(
 puts student_example
 #Изменяем контакты, только обращаясь к методу объекта класса для них
 student_example.set_contacts(phone: 89998887766, email: "new_email@example.com")
+puts student_example
 #Проверяем наличие гита и контактов
-student_example.validate_git_or_contact
+student_example.validate_git_and_contact
 
 #Выводим гит,инициалы и контакты через отдельные методы объекта класса
 puts student_example.git_info
@@ -44,6 +45,8 @@ puts student_example.contacts_info
 #Выводим краткую информацию через метод объекта класса
 puts student_example.get_info
 
-#Создаем наследник-объект класса с краткой информацией через обращение к суперклассу
+#Создаем объект класса с краткой информацией, передавая туда уже созданный объект другого класса
 student_example_short = student_example.short_info
 puts student_example_short
+
+puts student_me.contacts_info

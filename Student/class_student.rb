@@ -1,185 +1,195 @@
 #Соглашения о наименованиях: snake_case, CamelCase, getter, setter=
-class Student
-	#Конструктор с хэшем параметров
-  	def initialize(params = {})
-    # fetch для обязательных полей (также сделали параметр id необязательным)
-      @id = params[:id] if params[:id] && Student.id_valid?(params[:id])
-      @last_name = if params[:last_name] && Student.name_valid?(params[:last_name])
-                   	params[:last_name]
-                 	 else
-                   	raise ArgumentError, "Неверная фамилия: #{params[:last_name]}"
-                 	 end
-    	@first_name = if params[:first_name] && Student.name_valid?(params[:first_name])
-                     params[:first_name]
-                    else
-                     raise ArgumentError, "Неверное имя: #{params[:first_name]}"
-                    end
-   		@middle_name =if params[:middle_name] && Student.name_valid?(params[:middle_name])
-                    	params[:middle_name]
-                    else
-                     raise ArgumentError, "Неверное отчество: #{params[:middle_name]}"
-                    end
-    	@phone = params[:phone] if params[:phone] && Student.phone_valid?(params[:phone])
-    	@telegram = params[:telegram] if params[:telegram] && Student.telegram_valid?(params[:telegram])        	
-    	@email = params[:email] if params[:email] && Student.email_valid?(params[:email])
-    	@git = params[:git] if params[:git] && Student.git_valid?(params[:git])
-  	end
+class Person
+  attr_reader :id, :first_name, :last_name, :middle_name, :git
 
-	#Автоматическое создание геттера и сеттера для каждого поля с помощью атрибута
-	attr_accessor :id, :last_name, :first_name, :middle_name
-
-	#Геттер для полей контактов
-	attr_reader :phone, :telegram, :email, :git
-
-	#Изменение полей контактов только через метод объекта а не его поля
-	def set_contacts(params = {})
-		# вызов метода проверки (валидации) на корректность телефона
-  	@phone = params[:phone] if params[:phone] && Student.phone_valid?(params[:phone])
-  	@telegram = params[:telegram] if params[:telegram] && Student.telegram_valid?(params[:telegram])
-  	@email = params[:email] if params[:email] && Student.email_valid?(params[:email])
-	end
-	#Изменение поля гита только через метод объекта а не его поля
-	def set_git(params = {})
-		@git = params[:git] if params[:git] && Student.git_valid?(params[:git])
-	end		
-
-	#Метод для получения краткой информации о студенте
-	def get_info
-	  contact = if !@phone.nil?
-	              "Телефон: #{@phone}"
-	            elsif !@telegram.nil?
-	              "Телеграм: #{@telegram}"
-	            elsif !@contact.nil?
-	              "Почта: #{@contact}"
-	            else
-	              "Контакты не указаны"
-	            end
-	  "#{short_name}; Git: #{git_info}; #{contact}"
-	end
-
-	#Метод получения информации о контактах
-	def contacts_info
-		"Контакты: #{phone} #{telegram} #{email}"
-	end
-
-	#Метод возвращающий git
-	def git_info
-		@git
-	end
-
-	def short_name
-		"#{@last_name} #{first_name[0]}.#{middle_name[0]}."
-	end	
-
-	#Валидация для полей класса
-	def self.id_valid?(id)
-		id.to_s.match?(/^\d+$/)
-  end
-	# Валидация имени, фамилии и отчества (первая буква заглавная, остальные — строчные)
-	def self.name_valid?(name)
-  	name.match?(/^[А-ЯЁA-Z][а-яёa-z-]+$/)
-	end
-
-	# Валидация телефонного номера
-	def self.phone_valid?(phone)
-  	if phone.to_s.length == 11
-    # регулярное выражение с проверкой на наличие последовательности цифр \d+
-    	return phone.to_s.match?(/^\d+$/)
-  	elsif phone.to_s.length == 12
-    	# регулярное выражение с проверкой на наличие + и последовательности цифр \d+
-    	return phone.to_s.match?(/^\+\d+$/)
-  	else
-    	return false
-  	end
-	end
-
-	# Валидация Telegram-ника (может начинаться с @ и содержать только буквы, цифры и нижнее подчеркивание)
-	def self.telegram_valid?(telegram)
-  	telegram.match?(/^@[\w]+$/)
-	end
-
-	# Валидация электронной почты с использованием символов и домена)
-	def self.email_valid?(email)
-		email.match?(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)
+  # Конструктор с общими полями для наследников, id и git необязателен
+  def initialize(id: nil, first_name:, last_name:, middle_name:, git: nil)
+    self.first_name = first_name
+    self.last_name = last_name
+    self.middle_name = middle_name
+    self.git = git if git
+    self.id = id if id
   end
 
-	# Валидация ссылки на GitHub - ссылка должна начинаться github.com/
-	def self.git_valid?(git)
-  	git.match?(/^github\.com\/[\w.-]+$/)
-	end
+  # Сеттер для first_name с валидацией
+  def first_name=(value)
+    validate_name(:first_name, value)
+    @first_name = value
+  end
 
-	#Валидация в виде предиката на наличие гита
-	def git_null?
-		return @git.nil?
-	end
+  # Сеттер для last_name с валидацией
+  def last_name=(value)
+    validate_name(:last_name, value)
+    @last_name = value
+  end
 
-	#Валидация с помощью предиката any? на наличие хотя бы одного контакта
-	def contacts_null?
-		[@phone, @telegram, @email].any? { |contact| contact != nil  }
-	end
+  # Сеттер для middle_name с валидацией
+  def middle_name=(value)
+    validate_name(:middle_name, value)
+    @middle_name = value
+  end
 
-	#Метод для двух валидаций - наличия контакта и гита
-	def validate_git_or_contact
-	  errors = []
+  # Сеттер для id с валидацией
+  def id=(value)
+    raise ArgumentError, "Неверный ID: #{value}" unless Person.id_valid?(value)
+    @id = value
+  end
 
-	  # Проверяем наличие Git
-	  if git_null?
-	    errors << "Гит не указан"
-	  else
-	    puts "Гит студента: #{@git}"
+  # Сеттер для git с валидацией
+  def git=(value)
+    raise ArgumentError, "Неверный Git: #{value}" unless Person.git_valid?(value)
+    @git = value
+  end
+
+  # Валидация имени, фамилии и отчества
+  def validate_name(field, value)
+    raise ArgumentError, "Неверное значение для #{field}: #{value}" unless Person.name_valid?(value)
+  end
+
+  # Предика для валидация имени, фамилии и отчества (capitalize)
+  def self.name_valid?(name)
+    name.match?(/^[А-ЯЁA-Z][а-яёa-z-]+$/)
+  end
+
+  # Валидация-предикат id
+  def self.id_valid?(id)
+    id.to_s.match?(/^\d+$/)
+  end
+
+  # Валидация-предикат ссылки на GitHub
+  def self.git_valid?(git)
+    git.match?(/^github\.com\/[\w.-]+$/)
+  end
+
+  # Метод для получения инициалов (Фамилия И.О.)
+  def short_name
+    "#{last_name} #{first_name[0]}.#{middle_name[0]}."
+  end
+
+  def to_s
+    str = []
+    str << "ID: #{id}" if @id
+    str << "Фамилия: #{last_name}"
+    str << "Имя: #{first_name}"
+    str << "Отчество: #{middle_name}"
+    str << "GitHub: #{git}" if @git
+    str.join("; ")
+  end
+end
+
+class Student < Person
+  attr_reader :phone, :telegram, :email
+
+  # Конструктор для студента
+  def initialize(id: nil, first_name:, last_name:, middle_name:, git: nil, phone: nil, telegram: nil, email: nil)
+    super(first_name: first_name, last_name: last_name, middle_name: middle_name, git: git, id: id)
+    set_contacts(phone: phone, telegram: telegram, email: email)
+  end
+
+  # Сеттер для phone с валидацией
+  def phone=(value)
+    raise ArgumentError, "Неверный телефон: #{value}" unless Student.phone_valid?(value)
+    @phone = value
+  end
+
+  # Сеттер для telegram с валидацией
+  def telegram=(value)
+    raise ArgumentError, "Неверный Telegram: #{value}" unless Student.telegram_valid?(value)
+    @telegram = value
+  end
+
+  # Сеттер для email с валидацией
+  def email=(value)
+    raise ArgumentError, "Неверный email: #{value}" unless Student.email_valid?(value)
+    @email = value
+  end
+
+  # Метод для установки контактов через сеттеры
+  def set_contacts(phone: nil, telegram: nil, email: nil)
+    self.phone = phone if phone
+    self.telegram = telegram if telegram
+    self.email = email if email
+  end
+
+  # Валидация телефонного номера
+  def self.phone_valid?(phone)
+    phone.to_s.match?(/^(\d{11}|\+\d{11})$/)
+  end
+
+  # Валидация телеги
+  def self.telegram_valid?(telegram)
+    telegram.match?(/^@[\w]+$/)
+  end
+
+  # Валидация электронной почты
+  def self.email_valid?(email)
+    email.match?(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)
+  end
+
+  def git_null?
+    @git.nil?
+  end
+
+  def contacts_null?
+    [@phone, @telegram, @email].nil?
+  end
+
+  def validate_git_and_contact
+    git_null? && contacts_not_null?
+  end
+  # Метод получения информации о контактах (исправил, теперь любой доступный)
+  def contacts_info
+	  contacts = []
+	  contacts << "Телефон: #{@phone}" if @phone
+	  contacts << "Телеграм: #{@telegram}" if @telegram
+	  contacts << "Почта: #{@email}" if @email
+	  if contacts.empty?
+	  	"Ни один контакт не указан"
+	  else contacts.join(", ")
 	  end
-
-	  # Проверяем наличие хотя бы одного контакта
-	  unless contacts_null?
-	    errors << "Ни один контакт студента не указан"
-	  else
-	    puts "У студента есть хотя бы один контакт: #{contacts_info}"
-	  end
-
-	  # Если есть ошибки, выбрасываем исключение
-	  raise ArgumentError, errors.join(", ") unless errors.empty?
 	end
 
-	#Метод класса для отображения текущего состояния объекта с помощью переопределения строки
-	def to_s
-  	str = []
-  	str << "ID: #{@id}"
-		str << "Фамилия: #{@last_name}"
-		str << "Имя: #{@first_name}"
-		str << "Отчество: #{@middle_name}"
-		str << "Номер телефона: #{@phone}"
-		str << "Телеграм: #{@telegram}"
-		str << "Почта: #{@email}"
-		str << "GitHub: #{@git}"
-		str.join("; ")
+  def git_info
+    @git
   end
 
-	#Метод для создания объекта-наследника суперкласса Student с краткой информацией
-	def short_info
+  def get_info
+    "#{short_name}; Git: #{git_info}; #{contacts_info}"
+  end
+
+  def to_s
+    str = []
+    str << super
+    str << "Номер телефона: #{@phone}" if @phone
+    str << "Телеграм: #{@telegram}" if @telegram
+    str << "Почта: #{@email}" if @email
+    str.join("; ")
+  end
+
+  # Метод для создания краткой информации о студенте
+  def short_info
     StudentShort.new(self)
   end
 end
 
 #Наследуемый класс с краткой информацией
-class StudentShort < Student
-  # Конструктор принимает объект класса Student
+class StudentShort < Person
+  attr_reader :last_name_initials, :contacts
+
+  # Конструктор принимает объект класса Student и инициализирует только нужные поля
   def initialize(student)
-    @id = student.id
+    @id = student.id if student.id
     @last_name_initials = student.short_name
     @git = student.git
     @contacts = student.contacts_info
   end
 
-  # Геттеры для полей
-  attr_reader :id, :last_name_initials, :git, :contacts
-
-  # Вывод информации об экземпляре c помощью переопределения метода строки
   def to_s
-  	str = []
-  	str << "ID: #{@id}"
+    str = []
+    str << "ID: #{@id}" if @id
     str << "Фамилия И.О.: #{@last_name_initials}"
-    str << "GitHub: #{@git}"
-    str << "#{@contacts}"
+    str << "GitHub: #{@git}" if @git
+    str << "#{@contacts}" if @contacts
     str.join("; ")
   end
 end
