@@ -1,5 +1,7 @@
 #Подключаем класс студентов из отдельного файла
 require_relative 'class_student'
+require_relative 'person'
+require_relative 'student_short'
 #Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
 	id: 1,
@@ -36,11 +38,10 @@ puts student_example
 student_example.validate_git_and_contact
 
 #Выводим гит,инициалы и контакты через отдельные методы объекта класса
-puts student_example.git_info
 
 puts student_example.short_name
 
-puts student_example.contacts_info
+puts student_example.contact_info
 
 #Выводим краткую информацию через метод объекта класса
 puts student_example.get_info
@@ -48,5 +49,3 @@ puts student_example.get_info
 #Создаем объект класса с краткой информацией, передавая туда уже созданный объект другого класса
 student_example_short = student_example.short_info
 puts student_example_short
-
-puts student_me.contacts_info
