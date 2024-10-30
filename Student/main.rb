@@ -40,12 +40,14 @@ student_example.validate_git_and_contact
 #Выводим гит,инициалы и контакты через отдельные методы объекта класса
 
 puts student_example.short_name
-
+puts student_example.short_info
 puts student_example.contact_info
 
 #Выводим краткую информацию через метод объекта класса
 puts student_example.get_info
 
 #Создаем объект класса с краткой информацией, передавая туда уже созданный объект другого класса
-student_example_short = student_example.short_info
+student_example_short = StudentShort.new_from_student(student_example)
 puts student_example_short
+student_example_short_2 = StudentShort.new_from_string(id: 2, str: "Иванов И.И.; github.com/ivan; ivan@example.com")
+puts student_example_short_2

@@ -3,39 +3,39 @@ require_relative 'person'
 class Person
   attr_reader :id, :first_name, :last_name, :middle_name, :git, :contact
 
-  # Конструктор с общими полями для наследников, id и git необязателен
+  # Конструктор с общими полями для наследников, id,git и contact необязателен
   def initialize(id: nil, first_name:, last_name:, middle_name:, git: nil, contact: nil)
     self.first_name = first_name
     self.last_name = last_name
     self.middle_name = middle_name
     self.git = git if git
     self.id = id if id
-    self.contact = contact
+    self.contact = contact if contact
   end
 
   # Сеттер для first_name с валидацией
-  private def first_name=(value)
+  def first_name=(value)
     @first_name = validate_name(:first_name, value)
   end
 
   # Сеттер для last_name с валидацией
-  private def last_name=(value)
+  def last_name=(value)
     @last_name = validate_name(:last_name, value)
   end
 
   # Сеттер для middle_name с валидацией
-  private def middle_name=(value)
+  def middle_name=(value)
     @middle_name = validate_name(:middle_name, value)
   end
 
   # Сеттер для id с валидацией
-  private def id=(value)
+  def id=(value)
     raise ArgumentError, "Неверный ID: #{value}" unless Person.id_valid?(value)
     @id = value
   end
 
   # Сеттер для git с валидацией
-  private def git=(value)
+  def git=(value)
     raise ArgumentError, "Неверный Git: #{value}" unless Person.git_valid?(value)
     @git = value
   end
@@ -62,11 +62,11 @@ class Person
   end
 
   def git_null?
-    @git.nil?
+    self.git.nil?
   end
 
   def contact_null?
-    contact.nil?
+    self.contact.nil?
   end
 
   protected def contact=(value)
@@ -83,7 +83,7 @@ class Person
   end
 
   def git_info
-    @git
+    self.git
   end  
 
   def to_s

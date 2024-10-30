@@ -1,7 +1,6 @@
 require_relative 'person'
 class Student < Person
   attr_reader :phone, :telegram, :email
-
   # Конструктор для студента
   def initialize(id: nil, first_name:, last_name:, middle_name:, git: nil, phone: nil, telegram: nil, email: nil)
     set_contacts(phone: phone, telegram: telegram, email: email)
@@ -9,7 +8,7 @@ class Student < Person
   end
 
   # Сеттер для phone с валидацией
-  def phone=(phone)
+  private def phone=(phone)
 	  if phone.nil? || Student.phone_valid?(phone)
 	    @phone = phone
 	  else
@@ -17,9 +16,8 @@ class Student < Person
 	  end
 	end
 
-
   # Сеттер для telegram с валидацией
- 	def telegram=(telegram)
+ 	private def telegram=(telegram)
 	  if telegram.nil? || Student.telegram_valid?(telegram)
 	    @telegram = telegram
 	  else
@@ -34,7 +32,6 @@ class Student < Person
 	    raise ArgumentError.new("Неверный адрес электронной почты: #{id} #{last_name} #{first_name}")
 	  end
 	end
-
 
   # Метод для установки контактов через сеттеры
   def set_contacts(phone: nil, telegram: nil, email: nil)
@@ -67,12 +64,12 @@ class Student < Person
 	  elsif @email
 	    "Почта: #{@email}"
 	  else
-	    "Ни один контакт не указан"
+	    nil
 	  end
 	end
 
   def get_info
-    "#{short_name}; Git: #{git_info}; #{@contact}"
+    "#{short_name}; Гит: #{git_info}; #{@contact}"
   end
 
   def to_s
@@ -86,14 +83,6 @@ class Student < Person
 
   # Метод для создания краткой информации о студенте
   def short_info
-    StudentShort.new(self)
+    "id: #{@id}; Фамилия: #{@firstname}; Имя: #{@last_name}; Отчество: #{@middle_name}; git: #{@git}; #{@contact}"
   end
 end
-
-
-# разделить на файлы классы
-# attr_reader - это метод, в student_short 'attr_reader: contacts' контактс это метод
-# возвращающий контакт и в student 'contacts_info' метод тоже возращает contact. ОДИНАКОВЫЕ МЕТОДЫ, но разные названия
-# validate_git_and_contact в student_short тоже хочет видеть
-# заприватить или запротектить сеттеры телефон, емаил и тд.
-# 
