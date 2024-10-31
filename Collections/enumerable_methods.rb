@@ -3,9 +3,14 @@ def two_smallest_element_index(arr)
   arr.each_with_index.min_by(2) { |value, _| value }.map { |_, idx| idx }
 end
 
-# 20. Найти все пропущенные числа в массиве
+# 20 Найти все пропущенные числа в массиве
 def find_missing_numbers(arr)
   (arr.min..arr.max).to_a - arr
+end
+
+# 32 Найти количество локальных максимумов
+def count_local_maximum(arr)
+  arr.each_cons(3).count { |a, b, c| b > a && b > c }
 end
 
 # Выбор метода для выполнения и пути загрузки массива
