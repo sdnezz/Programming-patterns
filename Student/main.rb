@@ -1,5 +1,5 @@
 #Подключаем класс студентов из отдельного файла
-require_relative 'class_student'
+require_relative 'student'
 require_relative 'person'
 require_relative 'student_short'
 #Создаем несколько экземпляров класса с разными комбинациями необязательных полей

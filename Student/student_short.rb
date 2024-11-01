@@ -36,7 +36,7 @@ class StudentShort < Person
     str.split('; ')  # Разделяем строку по символу ";" c пробелом
   end
   # Закрываем метод new
-  private_instance_method  initialize
+  private_class_method  :new
 
   # Переопределение метода to_s
   def to_s

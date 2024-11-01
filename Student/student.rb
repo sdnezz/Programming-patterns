@@ -12,7 +12,7 @@ class Student < Person
 	  if phone.nil? || Student.phone_valid?(phone)
 	    @phone = phone
 	  else
-	    raise ArgumentError.new("Неверный телефон: #{id} #{last_name} #{first_name}")
+	    raise ArgumentError, "Неверный телефон: #{id} #{last_name} #{first_name}"
 	  end
 	end
 
@@ -21,7 +21,7 @@ class Student < Person
 	  if telegram.nil? || Student.telegram_valid?(telegram)
 	    @telegram = telegram
 	  else
-	    raise ArgumentError.new("Неверный Telegram: #{id} #{last_name} #{first_name}")
+	    raise ArgumentError, "Неверный Telegram: #{id} #{last_name} #{first_name}"
 	  end
 	end
 
@@ -29,7 +29,7 @@ class Student < Person
 	  if email.nil? || Student.email_valid?(email)
 	    @email = email
 	  else
-	    raise ArgumentError.new("Неверный адрес электронной почты: #{id} #{last_name} #{first_name}")
+	    raise ArgumentError, "Неверный адрес электронной почты: #{id} #{last_name} #{first_name}"
 	  end
 	end
 
