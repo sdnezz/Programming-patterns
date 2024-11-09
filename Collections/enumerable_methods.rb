@@ -13,6 +13,18 @@ def count_local_maximum(arr)
   arr.each_cons(3).count { |a, b, c| b > a && b > c }
 end
 
+# 44 Проверить чередование целых и вещественных чисел
+def alternating_integer_float?(arr)
+  expect_integer = arr.first.is_a?(Integer)
+  
+  arr.all? do |element|
+    #если ожидаемый true, то проверяемый float или наоборот
+    is_valid = (expect_integer && element.is_a?(Integer)) || (!expect_integer && element.is_a?(Float))
+    expect_integer = !expect_integer
+    is_valid
+  end
+end
+
 # Выбор метода для выполнения и пути загрузки массива
 if ARGV.length == 2
   number_of_method = ARGV[0].to_i
@@ -36,10 +48,10 @@ else
       raise ArgumentError, "Файл '#{filepath_of_array}' не найден"
     end
     opened_file = File.read(filepath_of_array)
-    array = opened_file.split.map(&:to_i)
+    array = opened_file.split.map { |num| num.include?('.') ? num.to_f : num.to_i }
   elsif input_method == 'вручную'
     puts "Введите массив чисел через пробел:"
-    array = gets.chomp.split.map(&:to_i)
+    array = gets.chomp.split.map { |num| num.include?('.') ? num.to_f : num.to_i }
   else
     raise ArgumentError, "Неверный метод ввода. Используйте 'файл' или 'вручную'."
   end
