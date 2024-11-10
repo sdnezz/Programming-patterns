@@ -25,11 +25,25 @@ def alternating_integer_float?(arr)
   end
 end
 
+# 5. Среднее арифметическое непростых элементов, превышающих среднее простых
+def prime?(num)
+  return false if num <= 1
+  (2..Math.sqrt(num).to_i).none? { |i| num % i == 0 }
+end
+
+def avg_non_prime_greater_than_avg_prime(arr)
+  primes, non_primes = arr.partition { |num| prime?(num) }
+  avg_prime = primes.sum.to_f / primes.size if primes.size > 0
+  non_prime_above_avg = non_primes.select { |num| num > avg_prime } if avg_prime
+  non_prime_above_avg&.sum.to_f / non_prime_above_avg&.size if non_prime_above_avg && non_prime_above_avg.size > 0
+end
+
 # Выбор метода для выполнения и пути загрузки массива
 if ARGV.length == 2
   number_of_method = ARGV[0].to_i
   filepath_of_array = ARGV[1]
-  ARGV.clear
+  opened_file = File.read(filepath_of_array)
+  array = opened_file.split.map { |num| num.include?('.') ? num.to_f : num.to_i }
 else
   puts "Введите номер задачи для работы со списком:"
   puts "1) Индексы двух наименьших элементов"
@@ -58,7 +72,7 @@ else
 end
 
 # Проверка на пустоту массива
-if array.empty?
+if array.nil?
   puts "Массив пуст"
 else
   puts "Массив для обработки:"
