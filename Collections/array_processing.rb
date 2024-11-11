@@ -28,4 +28,9 @@ class ArrayProcessing
     end
     yield slice unless slice.empty?
   end
+
+  def test_max_by
+    max = @processor.max_by { |x| -x }
+    assert_equal 1, max
+  end
 end

@@ -16,4 +16,20 @@ class ArrayProcessingTest < Minitest::Test
     @processor.each_slice(2) { |slice| result << slice }
     assert_equal [[1, 2], [3, 4], [5]], result
   end
+
+# Реализация max_by
+  def max_by
+    return enum_for(:max_by) unless block_given?
+    max_element = nil
+    max_value = nil
+    @array.each do |element|
+      value = yield(element)
+      if max_element.nil? || value > max_value
+        max_element = element
+        max_value = value
+      end
+    end
+    max_element
+  end
+  
 end
