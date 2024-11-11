@@ -51,4 +51,14 @@ class ArrayProcessing
           .sort { |a, b| a[0] <=> b[0] }
           .map { |pair| pair[1] }
   end
+
+  # Реализация reject
+  def reject
+    return enum_for(:reject) unless block_given?
+    result = []
+    @array.each do |element|
+      result << element unless yield(element)
+    end
+    result
+  end
 end

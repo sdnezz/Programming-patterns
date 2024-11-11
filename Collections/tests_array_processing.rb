@@ -26,4 +26,9 @@ class ArrayProcessingTest < Minitest::Test
     sorted = @processor.sort_by { |x| -x }
     assert_equal [5, 4, 3, 2, 1], sorted
   end
+
+  def test_reject
+    rejected = @processor.reject { |x| x.even? }
+    assert_equal [1, 3, 5], rejected
+  end
 end

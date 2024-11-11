@@ -16,6 +16,10 @@ puts "\nsort_by:"
 sorted_array = array_processor.sort_by { |x| -x }
 puts "Отсортированный массив по убыванию: #{sorted_array}"
 
+puts "\nreject:"
+rejected_array = array_processor.reject { |x| x.even? }
+puts "Массив без четных элементов: #{rejected_array}"
+
 begin
   puts "\nПроверка ошибки при инициализации с неправильным типом данных:"
   ArrayProcessing.new("строка а не массив бебебебебе")
