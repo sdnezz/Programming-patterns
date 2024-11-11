@@ -17,19 +17,13 @@ class ArrayProcessingTest < Minitest::Test
     assert_equal [[1, 2], [3, 4], [5]], result
   end
 
-# Реализация max_by
-  def max_by
-    return enum_for(:max_by) unless block_given?
-    max_element = nil
-    max_value = nil
-    @array.each do |element|
-      value = yield(element)
-      if max_element.nil? || value > max_value
-        max_element = element
-        max_value = value
-      end
-    end
-    max_element
+  def test_max_by
+    max = @processor.max_by { |x| -x }
+    assert_equal 1, max
   end
   
+  def test_sort_by
+    sorted = @processor.sort_by { |x| -x }
+    assert_equal [5, 4, 3, 2, 1], sorted
+  end
 end

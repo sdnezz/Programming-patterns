@@ -29,8 +29,26 @@ class ArrayProcessing
     yield slice unless slice.empty?
   end
 
-  def test_max_by
-    max = @processor.max_by { |x| -x }
-    assert_equal 1, max
+  # Реализация max_by
+  def max_by
+    return enum_for(:max_by) unless block_given?
+    max_element = nil
+    max_value = nil
+    @array.each do |element|
+      value = yield(element)
+      if max_element.nil? || value > max_value
+        max_element = element
+        max_value = value
+      end
+    end
+    max_element
+  end
+
+  # Реализация sort_by
+  def sort_by
+    return enum_for(:sort_by) unless block_given?
+    @array.map { |element| [yield(element), element] }
+          .sort { |a, b| a[0] <=> b[0] }
+          .map { |pair| pair[1] }
   end
 end
