@@ -20,10 +20,23 @@ puts "\nreject:"
 rejected_array = array_processor.reject { |x| x.even? }
 puts "Массив без четных элементов: #{rejected_array}"
 
+# Демонстрация работы cycle
+puts "\ncycle (2 цикла):"
+array_processor.cycle(2) do |element|
+  print "#{element} "
+end
+puts
+
+begin
+  puts "\nПроверка доступа к массиву:"
+  p array_processor.array
+rescue => e
+  puts "Ошибка при доступе к массиву: #{e.message}"
+end
+
 begin
   puts "\nПроверка ошибки при инициализации с неправильным типом данных:"
   ArrayProcessing.new("строка а не массив бебебебебе")
 rescue TypeError => e
   puts "#{e.message}"
 end
-# Ожидаемый вывод: Поймано исключение: Неверный тип входных данных

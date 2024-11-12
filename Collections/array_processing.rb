@@ -61,4 +61,15 @@ class ArrayProcessing
     end
     result
   end
+
+  # Реализация cycle
+  def cycle(n = nil)
+    return enum_for(:cycle, n) unless block_given?
+    cycles = 0
+    loop do
+      @array.each { |element| yield element }
+      cycles += 1
+      break if n && cycles >= n
+    end
+  end
 end

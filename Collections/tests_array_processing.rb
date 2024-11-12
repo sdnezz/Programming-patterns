@@ -31,4 +31,10 @@ class ArrayProcessingTest < Minitest::Test
     rejected = @processor.reject { |x| x.even? }
     assert_equal [1, 3, 5], rejected
   end
+
+  def test_cycle
+    result = []
+    @processor.cycle(2) { |x| result << x }
+    assert_equal [1, 2, 3, 4, 5, 1, 2, 3, 4, 5], result
+  end
 end
