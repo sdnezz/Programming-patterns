@@ -8,8 +8,19 @@ class Tag
     @parent = parent
     @children = []
   end
+  
+  # Метод для проверки наличия дочерних элементов
+  def has_children?
+    !@children.empty?
+  end
+
+  # Строковое представление тега
+  def to_s
+    "<#{@title_tag} #{attributes_to_s}>#{@content_tag}</#{@title_tag}>"
+  end
 
   private
+
   def attributes_to_s
     @attributes_dictionary.map { |k, v| "#{k}='#{v}'" }.join(" ")
   end
