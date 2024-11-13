@@ -1,6 +1,6 @@
 # Тестирование класса
 require 'minitest/autorun'
-require_relative 'array_processing'
+require '../blocks_methods/array_processing.rb'
 class ArrayProcessingTest < Minitest::Test
   def setup
     @array = [1, 2, 3, 4, 5]
