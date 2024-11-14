@@ -1,23 +1,22 @@
-require_relative 'html_tree'
-require_relative 'parser_html'
-require_relative 'tag'
+require './html_tree_dfs.rb'
+require './html_tree_bfs.rb'
 
-# Пример HTML-строки для тестирования
-html_string = "<html><body><p>Hello World</p></body></html>"
+def main
+  begin
+    html_tree = HTML_Tree.create_from_file('example.html')
+    p html_tree
 
-# Создание объекта HtmlTree на основе строки html_string
-html_tree = HtmlTree.new(html_string)
+    html_tree_dfs = HTML_Tree_DFS.create_from_file('example.html')
+    html_tree_dfs.each { |node| puts "#{node}\n" }
+    puts "Total nodes (DFS): #{html_tree_dfs.count}"
 
-# Вывод корневого тега и его атрибутов
-puts "Root tag: #{html_tree.root.title_tag}"
-puts "Root attributes: #{html_tree.root.attributes_dictionary}"
-puts "Root content: #{html_tree.root.content_tag}"
+    html_tree_bfs = HTML_Tree_BFS.create_from_file('example.html')
+    html_tree_bfs.each { |node| puts "#{node}\n" }
 
-# Проверяем, что у корня есть дочерние элементы и выводим их
-puts "Root has children? #{html_tree.root.has_children?}"
-html_tree.root.children.each do |child|
-  puts "Child tag: #{child.title_tag}, Content: #{child.content_tag}"
+    puts "Nodes with no attributes (DFS): #{html_tree_dfs.count { |tag| tag.attributes_dictionary.empty? }}"
+  rescue => error
+    puts error
+  end
 end
 
-# Вывод всего дерева (корень и его дочерние элементы)
-puts "HTML Tree root to_s: #{html_tree.root}"
+main
