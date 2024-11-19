@@ -15,17 +15,20 @@ class Person
 
   # Сеттер для first_name с валидацией
   def first_name=(value)
-    @first_name = validate_name(:first_name, value)
+    validate_name(:first_name, value)
+    @first_name = value
   end
 
   # Сеттер для last_name с валидацией
   def last_name=(value)
-    @last_name = validate_name(:last_name, value)
+    validate_name(:last_name, value)
+    @last_name = value
   end
-
+  
   # Сеттер для middle_name с валидацией
   def middle_name=(value)
-    @middle_name = validate_name(:middle_name, value)
+    validate_name(:middle_name, value)
+    @middle_name = value
   end
 
   # Сеттер для id с валидацией
@@ -43,7 +46,6 @@ class Person
   # Валидация имени, фамилии и отчества
   def validate_name(field, value)
     raise ArgumentError, "Неверное значение для #{field}: #{value}" unless Person.name_valid?(value)
-    value
   end
 
   # Предика для валидация имени, фамилии и отчества (capitalize)
