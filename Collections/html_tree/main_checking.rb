@@ -1,22 +1,36 @@
-require './html_tree_dfs.rb'
-require './html_tree_bfs.rb'
+require_relative 'tag'
+require_relative 'parser_html'
+require_relative 'html_tree'
 
-def main
-  begin
-    html_tree = HTML_Tree.create_from_file('example.html')
-    p html_tree
+# Загружаем HTML из файла
+file_path = "example.html"
 
-    html_tree_dfs = HTML_Tree_DFS.create_from_file('example.html')
-    html_tree_dfs.each { |node| puts "#{node}\n" }
-    puts "Total nodes (DFS): #{html_tree_dfs.count}"
+if File.exist?(file_path)
+  tree = HtmlTree.create_from_file(file_path)
 
-    html_tree_bfs = HTML_Tree_BFS.create_from_file('example.html')
-    html_tree_bfs.each { |node| puts "#{node}\n" }
+  # Вывод структуры дерева
+  puts "=== Tree Structure ==="
+  tree.print_tree
 
-    puts "Nodes with no attributes (DFS): #{html_tree_dfs.count { |tag| tag.attributes_dictionary.empty? }}"
-  rescue => error
-    puts error
+  # Использование Enumerable для DFS
+  puts "\n=== Tags with Attributes (DFS using Enumerable) ==="
+  tags_with_attributes = tree.select { |node| node.has_attributes? }
+  tags_with_attributes.each do |node|
+    puts "Tag: #{node.title_tag}, Attributes: #{node.attributes_dictionary}"
   end
-end
 
-main
+  # Явный DFS
+  puts "\n=== DFS (Manual Call) ==="
+  tree.each_dfs do |node|
+    puts "Tag: #{node.title_tag}, Attributes: #{node.attributes_dictionary}, Content: #{node.content_tag}"
+  end
+
+  # Явный BFS
+  puts "\n=== BFS (Manual Call) ==="
+  tree.each_bfs do |node|
+    puts "Tag: #{node.title_tag}, Attributes: #{node.attributes_dictionary}, Content: #{node.content_tag}"
+  end
+
+else
+  puts "File not found: #{file_path}"
+end
