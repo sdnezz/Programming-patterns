@@ -8,13 +8,14 @@ def find_missing_numbers(arr)
   (arr.min..arr.max).to_a - arr
 end
 
-# 32 Найти количество локальных максимумов
+# 32 Найти количество локальных максимумов (соседи меньше)
 def count_local_maximum(arr)
   arr.each_cons(3).count { |a, b, c| b > a && b > c }
 end
 
 # 44 Проверить чередование целых и вещественных чисел
 def alternating_integer_float?(arr)
+  #Переменная ожидаемого типа (int / float)
   expect_integer = arr.first.is_a?(Integer)
   
   arr.all? do |element|
@@ -25,15 +26,16 @@ def alternating_integer_float?(arr)
   end
 end
 
-# 5. Среднее арифметическое непростых элементов, превышающих среднее простых
+# Предикат простоты числа-элемента
 def prime?(num)
   return false if num <= 1
+  #Диапазон с 2 т.к. 1 не простое
   (2..Math.sqrt(num).to_i).none? { |i| num % i == 0 }
 end
-
+# 5. Среднее арифметическое непростых элементов, превышающих среднее простых
 def avg_non_prime_greater_than_avg_prime(arr)
   primes, non_primes = arr.partition { |num| prime?(num) }
-  avg_prime = primes.sum.to_f / primes.size if primes.size > 0
+  avg_prime = primes.sum.to_f / primes.size if primes.size > 0 #Иначе avg_prime = nil
   non_prime_above_avg = non_primes.select { |num| num > avg_prime } if avg_prime
   non_prime_above_avg&.sum.to_f / non_prime_above_avg&.size if non_prime_above_avg && non_prime_above_avg.size > 0
 end

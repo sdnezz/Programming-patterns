@@ -1,9 +1,11 @@
 require_relative 'person'
+require 'date'
 class Student < Person
-  attr_reader :phone, :telegram, :email
+  attr_reader :phone, :telegram, :email, :birthdate
   # Конструктор для студента
-  def initialize(id: nil, first_name:, last_name:, middle_name:, git: nil, phone: nil, telegram: nil, email: nil)
+  def initialize(id: nil, first_name:, last_name:, middle_name:, git: nil, phone: nil, telegram: nil, email: nil, birthdate: nil)
     set_contacts(phone: phone, telegram: telegram, email: email)
+    self.birthdate = birthdate if birthdate
     super(first_name: first_name, last_name: last_name, middle_name: middle_name, git: git, id: id, contact: contact_info)
   end
 
@@ -32,6 +34,10 @@ class Student < Person
 	    raise ArgumentError, "Неверный адрес электронной почты: #{id} #{last_name} #{first_name}"
 	  end
 	end
+
+  def birthdate=(birthdate)
+    @birthdate = Date.parse(birthdate)
+  end
 
   # Метод для установки контактов через сеттеры
   def set_contacts(phone: nil, telegram: nil, email: nil)

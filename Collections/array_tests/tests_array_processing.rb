@@ -18,10 +18,10 @@ class ArrayProcessingTest < Minitest::Test
   end
 
   def test_max_by
-    max = @processor.max_by { |x| -x }
-    assert_equal 1, max
+    max = @processor.max_by(2) { |x| -x }
+    assert_equal [1, 2], max
   end
-  
+
   def test_sort_by
     sorted = @processor.sort_by { |x| -x }
     assert_equal [5, 4, 3, 2, 1], sorted
