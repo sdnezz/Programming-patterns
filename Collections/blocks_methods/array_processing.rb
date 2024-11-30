@@ -1,6 +1,4 @@
 class ArrayProcessing
-  attr_reader :array
-
   def initialize(array)
     self.array = array
   end
@@ -11,6 +9,10 @@ class ArrayProcessing
     else
       raise TypeError.new('Неверный тип входных данных')
     end
+  end
+
+  def array
+    @array
   end
 
   private :array=
@@ -34,8 +36,8 @@ class ArrayProcessing
   def max_by(n = 1)
     return enum_for(:max_by, n) unless block_given?
 
-    max_elements = [] # Массив для хранения максимальных элементов
-    max_values = []   # Массив для хранения максимальных значений блока
+    max_elements = []  # Массив для хранения максимальных элементов
+    max_values = []    # Массив для хранения значений блока
 
     @array.each do |element|
       value = yield(element)
@@ -45,9 +47,17 @@ class ArrayProcessing
         max_elements << element
         max_values << value
       else
-        # Если массив уже полон, ищем минимальное значение среди сохраненных
-        min_value = max_values.min
-        min_index = max_values.index(min_value)
+        # Если массив уже полон, находим минимальное значение среди сохраненных
+        min_value = max_values.first
+        min_index = 0
+
+        # Находим минимальное значение в max_values и его индекс
+        max_values.each_with_index do |v, i|
+          if v < min_value
+            min_value = v
+            min_index = i
+          end
+        end
 
         # Заменяем минимальный элемент, если текущий больше
         if value > min_value
@@ -56,24 +66,56 @@ class ArrayProcessing
         end
       end
     end
+
     # Если n == 1, возвращаем единственный элемент, иначе массив
     if n == 1
       max_elements.first
     else
-      #Объединение в массив пар из массивов значения и обработанного блоком значения по индексу
-      max_elements.zip(max_values)
-                  .sort_by { |_, value| -value }
-                  .map { |element, _| element }
+      # Сортируем элементы по значениям, но без использования sort
+      result = []
+      n.times do
+        # Находим максимальный элемент вручную
+        max_value = max_values.first
+        max_index = 0
+        max_values.each_with_index do |v, i|
+          if v > max_value
+            max_value = v
+            max_index = i
+          end
+        end
+        result << max_elements.delete_at(max_index)
+        max_values.delete_at(max_index)
+      end
+      result
     end
   end
 
   # Реализация sort_by
   def sort_by
     return enum_for(:sort_by) unless block_given?
-    @array.map { |element| [yield(element), element] }
-          #Сравнение значения элементов из каждой пары возвращение самого элемента
-          .sort { |a, b| a[0] <=> b[0] }
-          .map { |pair| pair[1] }
+
+    result = []
+    @array.each do |element|
+      result << [yield(element), element]  # Массив пар [значение, элемент]
+    end
+
+    # Сортируем массив пар вручную
+    n = result.length
+    (n - 1).times do |i|
+      (n - i - 1).times do |j|
+        if result[j][0] > result[j + 1][0]
+          result[j], result[j + 1] = result[j + 1], result[j]  # Меняем местами
+        end
+      end
+    end
+
+  # Возвращаем только элементы после сортировки без использования map
+    sorted_elements = []
+    result.each do |pair|
+      sorted_elements << pair[1]  # Добавляем только элементы из пар
+    end
+
+    sorted_elements
   end
 
   # Реализация reject
