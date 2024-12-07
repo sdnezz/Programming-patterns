@@ -1,6 +1,9 @@
 require_relative 'person'
 require 'date'
 class Student < Person
+  
+  include Comparable
+
   attr_reader :phone, :telegram, :email, :birthdate
   # Конструктор для студента
   def initialize(id: nil, first_name:, last_name:, middle_name:, git: nil, phone: nil, telegram: nil, email: nil, birthdate: nil)
@@ -37,6 +40,16 @@ class Student < Person
 
   def birthdate=(birthdate)
     @birthdate = Date.parse(birthdate)
+  end
+
+  def <=>(other)
+    if self.birthdate < other.birthdate
+      return -1
+    elsif self.birthdate == other.birthdate
+      return 0
+    else
+      return 1
+    end
   end
 
   # Метод для установки контактов через сеттеры
@@ -84,6 +97,7 @@ class Student < Person
     str << "Номер телефона: #{@phone}" if @phone
     str << "Телеграм: #{@telegram}" if @telegram
     str << "Почта: #{@email}" if @email
+    str << "Дата рождения: #{birthdate}" if @birthdate
     str.join("; ")
   end
 

@@ -4,66 +4,57 @@ require 'date'
 class BinarySortedTree
   include Enumerable
 
-  attr_reader :root
+  attr_accessor :root
 
-  def initialize
-    @root = nil
-  end
+  private :root=
 
-  # Добавление студента в дерево
-  def add(student)
-    if @root.nil?
-      @root = TreeNode.new(student)
-    else
-      insert(@root, student)
+  def initialize(obj_array)
+    if obj_array.nil?
+      raise ArgumentError.new('Неверный тип аргумента')
+    end
+
+    # Создание корня дерева с первым объектом
+    self.root = TreeNode.new(left: nil, right: nil, student: obj_array[0])
+
+    # Добавление всех остальных объектов в дерево
+    obj_array[1..].each do |student|
+      add_node(self.root, student)
     end
   end
 
-  # Метод вставки студента в дерево
-  private def insert(node, student)
-    if student.birthdate < node.student.birthdate
+  # Метод для добавления узлов в дерево
+  def add_node(node, student)
+    if student < node.student  # Сравниваем с текущим узлом
       if node.left.nil?
-        node.left = TreeNode.new(student)
+        node.left = TreeNode.new(left: nil, right: nil, student: student)
       else
-        insert(node.left, student)
+        add_node(node.left, student)
       end
     else
       if node.right.nil?
-        node.right = TreeNode.new(student)
+        node.right = TreeNode.new(left: nil, right: nil, student: student)
       else
-        insert(node.right, student)
+        add_node(node.right, student)
       end
     end
   end
 
-  # Реализация метода each для интерфейса Enumerable
+  # Реализация метода each для обхода дерева
   def each(&block)
-    traverse_in_order(@root, &block)
+    self.root.each(&block)
   end
 
-  # Обход дерева в порядке возрастания (in-order traversal)
-  private def traverse_in_order(node, &block)
-    return if node.nil?
-
-    traverse_in_order(node.left, &block)
-    block.call(node.student)
-    traverse_in_order(node.right, &block)
-  end
-
-  # Поиск студента по дате рождения
-  def find_by_birthdate(birthdate)
-    find(@root, Date.parse(birthdate))
-  end
-
-  private def find(node, birthdate)
-    return nil if node.nil?
-
-    if node.student.birthdate == birthdate
-      node.student
-    elsif birthdate < node.student.birthdate
-      find(node.left, birthdate)
-    else
-      find(node.right, birthdate)
+  # Вывод дерева
+  def print_in_order(node)
+    if !node.nil?
+      puts node.student  # Сначала выводим текущий узел
+      print_in_order(node.left)  # Рекурсивный обход левого поддерева
+      print_in_order(node.right)  # Рекурсивный обход правого поддерева
     end
+  end
+
+  # Преобразование дерева в строку
+  def to_s
+    print_in_order(self.root)
   end
 end

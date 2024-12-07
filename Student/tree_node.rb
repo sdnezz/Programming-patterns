@@ -1,21 +1,28 @@
 require_relative 'student'
+require 'date'
 class TreeNode
-  attr_accessor :student, :left, :right
+  include Comparable
+  include Enumerable
+  attr_accessor :left, :right, :student
 
-  def initialize(student)
-    @student = student
-    @left = nil
-    @right = nil
+  def initialize(left: nil, right: nil, student:)
+    self.student = student
+    self.left = left
+    self.right = right
   end
 
-  # Реализация метода each для обхода дерева
+  # Переопределение оператора <=> для сравнения студентов по дате рождения
+  def <=>(other)
+    self.student <=> other.student
+  end
+
+  # Обход дерева: сначала узел, затем левое поддерево, правое поддерево (NLR)
   def each(&block)
     yield self
     left.each(&block) if left
     right.each(&block) if right
   end
 
-  # Метод для красивого вывода информации об узле
   def to_s
     student.to_s
   end

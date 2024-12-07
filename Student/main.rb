@@ -54,17 +54,11 @@ student_example_short = StudentShort.new_from_student(student_example)
 puts student_example_short
 student_example_short_2 = StudentShort.new_from_string(id: 2, str: "Иванов И.И.; github.com/ivan; ivan@example.com")
 puts student_example_short_2
-
+puts 
+puts
+students = [student_example, student_me, student_valya]
 # Создаем бинарное сортированное дерево
-tree = BinarySortedTree.new
-tree.add(student_example)
-tree.add(student_me)
-tree.add(student_valya)
+tree = BinarySortedTree.new(students)
 
 # Итерация по дереву
-puts "Студенты в порядке дат рождения:"
-tree.each { |student| puts student.to_s }
-
-# Поиск по дате рождения
-found_student = tree.find_by_birthdate("1992-12-30")
-puts "Найденный студент: #{found_student}" if found_student
+puts tree
