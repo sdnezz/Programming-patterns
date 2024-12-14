@@ -1,8 +1,10 @@
+require_relative 'data_table'
+
 class DataList
 	attr_accessor :sorted_array
 	private :sorted_array=
 
-	  def initialize(array)
+	def initialize(array)
 	    self.sorted_array = []
 	    array.sort{|a, b| b <=> a}.each do |element|
 	      self.sorted_array.append({value: element, selected: false})

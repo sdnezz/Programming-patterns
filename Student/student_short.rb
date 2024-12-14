@@ -1,6 +1,8 @@
 require_relative 'person'
 
 class StudentShort < Person
+  include Comparable
+
   # Конструктор для инициализации объекта
   def initialize(id:, git:, contact:, last_name_initials:)
     @id = id
@@ -38,6 +40,11 @@ class StudentShort < Person
   # Закрываем метод new
   private_class_method  :new
 
+  def <=>(other)
+    return nil unless other.is_a?(StudentShort)
+    self.id <=> other.id
+  end
+  
   # Переопределение метода to_s
   def to_s
     str = []

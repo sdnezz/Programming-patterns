@@ -3,6 +3,7 @@ require_relative 'student'
 require_relative 'person'
 require_relative 'student_short'
 require_relative 'binary_tree'
+require_relative "../patterns_classes/data_list_student_short"
 # Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
 	id: 1,
@@ -51,7 +52,8 @@ puts student_example.get_info
 
 # Создаем объект класса с краткой информацией, передавая туда уже созданный объект другого класса
 student_example_short = StudentShort.new_from_student(student_example)
-puts student_example_short
+student_me_short = StudentShort.new_from_student(student_me)
+student_valya_short = StudentShort.new_from_student(student_valya)
 student_example_short_2 = StudentShort.new_from_string(id: 2, str: "Иванов И.И.; github.com/ivan; ivan@example.com")
 puts student_example_short_2
 puts 
@@ -62,3 +64,12 @@ tree = BinarySortedTree.new(students)
 
 # Итерация по дереву
 puts tree
+
+students_short = [student_example_short, student_me_short, student_valya_short]
+
+# Создаём объект DataListStudentShort
+data_list_student_short = DataListStudentShort.new(students_short)
+
+# Вызываем метод get_data и выводим результат
+puts "Данные таблицы студентов:"
+puts data_list_student_short.get_data
