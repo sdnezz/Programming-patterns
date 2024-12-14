@@ -25,7 +25,15 @@ class DataList
 
 	protected def get_names
 		#Возвращаем массив всех переменных экземпляра
-	    obj_fields = self.sorted_array.first.instance_variables
-	    return obj_fields.delete(:@id)
+		obj_fields = self.sorted_array.first[:value].instance_variables
+
+		# возвращаем без id
+		obj_fields - [:@id]
   	end
+
+  	# Абстрактный метод get_data
+	protected def get_data
+		raise NotImplementedError, 'Метод get_data должен быть реализован в наследнике'
+	end
+
 end
