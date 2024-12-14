@@ -15,3 +15,6 @@ puts data_list1
 puts
 puts data_list2[2]
 puts data_list2
+
+data_list2.select(1)
+puts "Выбранные элементы #{data_list2.get_selected}"
