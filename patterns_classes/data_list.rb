@@ -1,13 +1,23 @@
 require_relative 'data_table'
 
 class DataList
-  attr_accessor :sorted_array
-  private :sorted_array=
+  attr_reader :sorted_array
+  private :sorted_array
 
   def initialize(array)
     self.sorted_array = []
-    array.sort { |a, b| b <=> a }.each do |element|
-      self.sorted_array.append({ value: element, selected: false })
+    self.sorted_array = array
+  end
+
+  # Метод-сеттер для обновления массива объектов
+  def sorted_array=(new_array)
+    # Проверяем, что это массив
+    raise ArgumentError, 'Должен быть передан массив объектов' unless new_array.is_a?(Array)
+
+    # Обновляем массив объектов
+    @sorted_array = []
+    new_array.sort { |a, b| b <=> a }.each do |element|
+      @sorted_array.append({ value: element, selected: false })
     end
   end
 

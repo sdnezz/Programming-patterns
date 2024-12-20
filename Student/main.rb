@@ -73,3 +73,7 @@ data_list_student_short = DataListStudentShort.new(students_short)
 # Вызываем метод get_data и выводим результат
 puts "Данные таблицы студентов:"
 puts data_list_student_short.get_data
+
+data_list_student_short.sorted_array = [student_me_short,student_valya_short]
+puts "Данные таблицы студентов:"
+puts data_list_student_short.get_data
