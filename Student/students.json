@@ -2,7 +2,6 @@
   {
     "phone": "+79112223344",
     "email": "petr@example.com",
-    "contact": "Телефон: +79112223344",
     "birthdate": "2000-05-15",
     "first_name": "Пётр",
     "last_name": "Иванов",
@@ -13,7 +12,6 @@
   {
     "phone": "+79123334455",
     "email": "sergey@example.com",
-    "contact": "Телефон: +79123334455",
     "birthdate": "1999-11-10",
     "first_name": "Сергей",
     "last_name": "Петров",
@@ -24,7 +22,7 @@
   {
     "phone": "+79123456789",
     "email": "ivanov@example.com",
-    "contact": "Телефон: +79123456789",
+    "birthdate": "1995-06-15",
     "first_name": "Иван",
     "last_name": "Иванов",
     "middle_name": "Иванович",

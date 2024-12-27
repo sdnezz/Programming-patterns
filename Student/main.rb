@@ -5,6 +5,8 @@ require_relative 'student_short'
 require_relative 'binary_tree'
 require_relative "../patterns_classes/data_list_student_short"
 require_relative 'StudentListJSON'
+require_relative 'StudentListYAML'
+
 # Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
 	id: 1,
@@ -112,3 +114,33 @@ students_list.delete_student_by_id(3)
 
 # Сохраняем изменения
 students_list.write_to_file
+
+# Создаём объект
+students_list = StudentsListYAML.new(filepath: 'students.yaml')
+
+# Чтение из файла
+students_list.read_from_file
+
+# Вывод студентов
+puts "Список студентов с yml:"
+students_list.student_array.each { |student| puts student }
+
+# Добавление нового студента
+new_student = Student.new(
+  first_name: "Иван",
+  last_name: "Иванов",
+  middle_name: "Иванович",
+  git: "github.com/ivan",
+  phone: "+79112223344",
+  email: "ivanov@example.com"
+)
+students_list.add_student(new_student)
+
+# Запись в файл
+students_list.write_to_file
+
+# Получение студента по ID
+puts students_list.get_student_by_id(1)
+
+# Получение страницы объектов StudentShort
+puts students_list.get_k_n_student_short_list(page: 1, amount_rows: 2).get_data
