@@ -1,4 +1,5 @@
-- :phone: +79112223344
+---
+- :phone: 79112223344
   :email: petr@example.com
   :birthdate: 2000-05-15
   :first_name: Пётр
@@ -6,7 +7,7 @@
   :middle_name: Алексеевич
   :git: github.com/petr
   :id: 1
-- :phone: +79123334455
+- :phone: 79123334455
   :email: sergey@example.com
   :birthdate: 1999-11-10
   :first_name: Сергей
@@ -14,10 +15,24 @@
   :middle_name: Владимирович
   :git: github.com/sergey
   :id: 2
-- :phone: +79112223344
+- :phone: 79112223344
   :email: ivanov@example.com
   :first_name: Иван
   :last_name: Иванов
   :middle_name: Иванович
   :git: github.com/ivan
   :id: 3
+- :phone: "+79112223344"
+  :email: ivanov@example.com
+  :first_name: Иван
+  :last_name: Иванов
+  :middle_name: Иванович
+  :git: github.com/ivan
+  :id: 4
+- :phone: "+79112223344"
+  :email: ivanov@example.com
+  :first_name: Иван
+  :last_name: Иванов
+  :middle_name: Иванович
+  :git: github.com/ivan
+  :id: 5

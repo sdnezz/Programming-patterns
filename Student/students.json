@@ -22,11 +22,19 @@
   {
     "phone": "+79123456789",
     "email": "ivanov@example.com",
-    "birthdate": "1995-06-15",
     "first_name": "Иван",
     "last_name": "Иванов",
     "middle_name": "Иванович",
     "git": "github.com/ivan",
-    "id": 3
+    "id": 4
+  },
+  {
+    "phone": "+79123456789",
+    "email": "ivanov@example.com",
+    "first_name": "Иван",
+    "last_name": "Иванов",
+    "middle_name": "Иванович",
+    "git": "github.com/ivan",
+    "id": 5
   }
 ]

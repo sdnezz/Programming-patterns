@@ -4,8 +4,9 @@ require_relative 'person'
 require_relative 'student_short'
 require_relative 'binary_tree'
 require_relative "../patterns_classes/data_list_student_short"
-require_relative 'StudentListJSON'
-require_relative 'StudentListYAML'
+require_relative 'student_list_JSON'
+require_relative 'student_list_YAML'
+require_relative 'student_list'
 
 # Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
@@ -122,7 +123,7 @@ students_list = StudentsListYAML.new(filepath: 'students.yaml')
 students_list.read_from_file
 
 # Вывод студентов
-puts "Список студентов с yml:"
+puts "Список студентов с yaml:"
 students_list.student_array.each { |student| puts student }
 
 # Добавление нового студента
