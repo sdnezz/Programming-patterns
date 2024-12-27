@@ -4,6 +4,7 @@ require_relative 'person'
 require_relative 'student_short'
 require_relative 'binary_tree'
 require_relative "../patterns_classes/data_list_student_short"
+require_relative 'StudentListJSON'
 # Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
 	id: 1,
@@ -59,11 +60,6 @@ puts student_example_short_2
 puts 
 puts
 students = [student_example, student_me, student_valya]
-# Создаем бинарное сортированное дерево
-tree = BinarySortedTree.new(students)
-
-# Итерация по дереву
-puts tree
 
 students_short = [student_example_short, student_me_short, student_valya_short]
 
@@ -77,3 +73,42 @@ puts data_list_student_short.get_data
 data_list_student_short.sorted_array = [student_me_short,student_valya_short]
 puts "Данные таблицы студентов:"
 puts data_list_student_short.get_data
+
+students_list = StudentsListJSON.new(filepath: 'students.json')
+
+# Чтение из файла
+students_list.read_from_file
+
+# Выводим всех студентов
+puts "Список студентов c jsona:"
+students_list.student_array.each { |student| puts student }
+
+# Добавляем нового студента
+new_student = Student.new(
+  id: 4,
+  first_name: "Иван",
+  last_name: "Иванов",
+  middle_name: "Иванович",
+  git: "github.com/ivan",
+  phone: "+79123456789",
+  email: "ivanov@example.com"
+)
+students_list.add_student(new_student)
+
+# Сохраняем изменения в файл
+students_list.write_to_file
+
+# Получаем студента по ID
+puts "Студент с ID 2:"
+puts students_list.get_student_by_id(2)
+
+# Получаем страницу объектов StudentShort
+puts "Первая страница объектов StudentShort:"
+data_list = students_list.get_k_n_student_short_list(page: 1, amount_rows: 2)
+puts data_list.get_data
+
+# Удаляем студента по ID
+students_list.delete_student_by_id(3)
+
+# Сохраняем изменения
+students_list.write_to_file

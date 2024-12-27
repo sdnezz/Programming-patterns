@@ -1,0 +1,34 @@
+[
+  {
+    "phone": "+79112223344",
+    "email": "petr@example.com",
+    "contact": "Телефон: +79112223344",
+    "birthdate": "2000-05-15",
+    "first_name": "Пётр",
+    "last_name": "Иванов",
+    "middle_name": "Алексеевич",
+    "git": "github.com/petr",
+    "id": 1
+  },
+  {
+    "phone": "+79123334455",
+    "email": "sergey@example.com",
+    "contact": "Телефон: +79123334455",
+    "birthdate": "1999-11-10",
+    "first_name": "Сергей",
+    "last_name": "Петров",
+    "middle_name": "Владимирович",
+    "git": "github.com/sergey",
+    "id": 2
+  },
+  {
+    "phone": "+79123456789",
+    "email": "ivanov@example.com",
+    "contact": "Телефон: +79123456789",
+    "first_name": "Иван",
+    "last_name": "Иванов",
+    "middle_name": "Иванович",
+    "git": "github.com/ivan",
+    "id": 3
+  }
+]
