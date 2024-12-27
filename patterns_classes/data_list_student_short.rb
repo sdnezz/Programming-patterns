@@ -6,7 +6,6 @@ class DataListStudentShort < DataList
   end
 
   private def get_names
-    [:@last_name_initials, :@git, :@contact]
+    @names = [:@last_name_initials, :@git, :@contact]
   end
 end
-

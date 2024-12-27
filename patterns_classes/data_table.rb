@@ -22,5 +22,4 @@ class DataTable
     #Строка с максимальным количеством элементов - считаем сколько - колонки в матрице
     self.matrix.max{|a, b| a.size <=> b.size}.size
   end
-
 end
