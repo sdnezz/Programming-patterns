@@ -52,6 +52,17 @@ class Student < Person
     end
   end
 
+  def ==(other)
+    if (!self.git.nil? && self.git == other.git) ||
+      (!self.phone.nil? && self.phone == other.phone) ||
+      (!self.email.nil? && self.email == other.email) ||
+      (!self.telegram.nil? && self.telegram == other.telegram)
+      return true
+    else
+      return false
+    end
+  end
+
   # Метод для установки контактов через сеттеры
   def set_contacts(phone: nil, telegram: nil, email: nil)
     self.phone = phone if phone

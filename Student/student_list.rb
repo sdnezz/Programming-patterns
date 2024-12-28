@@ -22,9 +22,19 @@ class StudentList
 
   private :filepath=, :student_array=
 
-  # Абстрактные методы
+  # Чтение данных с уникальностью и перенумерацией
   def read_from_file
-    self.student_array = strategy.read_from_file(filepath)
+    raw_data = strategy.read_from_file(filepath) # Считываем данные
+    unique_data = raw_data.uniq # Удаляем дубликаты
+    self.student_array = renumber_students(unique_data) # Перенумерация
+  end
+
+  # Метод для перенумерации студентов
+  def renumber_students(students)
+    students.each_with_index do |student, index|
+      student.id = index + 1
+    end
+    students
   end
 
   def write_to_file
@@ -48,17 +58,22 @@ class StudentList
     DataListStudentShort.new(student_short_array[start_index..end_index])
   end
 
-  def sort_by_name
-    self.student_array.sort_by! { |student| student.last_name }
-  end
-
   def add_student(student)
+    if self.student_array.any? { |existing_student| existing_student == student }
+      raise ArgumentError, "Студент с такими данными уже существует: #{student}"
+    end
+
     max_id = self.student_array.map(&:id).compact.max || 0
     student.id = max_id + 1
     self.student_array << student
   end
 
+  # Замена студента с проверкой на уникальность
   def replace_student_by_id(required_id, new_student)
+    if self.student_array.any? { |existing_student| existing_student == new_student }
+      raise ArgumentError, "Студент с такими данными уже существует: #{new_student}"
+    end
+
     index = self.student_array.find_index { |student| student.id == required_id }
     self.student_array[index] = new_student if index
   end
