@@ -3,11 +3,12 @@ require_relative 'student_short'
 require_relative "../patterns_classes/data_list_student_short"
 
 class StudentList
-  attr_accessor :filepath
+  attr_accessor :filepath, :strategy
   attr_reader :student_array
 
-  def initialize(filepath:, student_array: nil)
+  def initialize(filepath:, strategy:, student_array: nil)
     self.filepath = filepath
+    self.strategy = strategy
     self.student_array = student_array || []
   end
 
@@ -23,11 +24,11 @@ class StudentList
 
   # Абстрактные методы
   def read_from_file
-    raise NotImplementedError, 'Метод read_from_file должен быть реализован в подклассе'
+    self.student_array = strategy.read_from_file(filepath)
   end
 
   def write_to_file
-    raise NotImplementedError, 'Метод write_to_file должен быть реализован в подклассе'
+    self.strategy.write_to_file(filepath, student_array)
   end
 
   # Общие методы

@@ -36,5 +36,19 @@
     "middle_name": "Иванович",
     "git": "github.com/ivan",
     "id": 5
+  },
+  {
+    "first_name": "Иван",
+    "last_name": "Иванов",
+    "middle_name": "Иванович",
+    "git": "github.com/ivan",
+    "id": 6
+  },
+  {
+    "first_name": "Иван",
+    "last_name": "Иванов",
+    "middle_name": "Иванович",
+    "git": "github.com/ivan",
+    "id": 7
   }
 ]

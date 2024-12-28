@@ -3,15 +3,15 @@ require_relative 'student_short'
 require_relative 'student_list'
 require_relative "../patterns_classes/data_list_student_short"
 require 'json'
+require_relative 'strategy_list_file'
 
-class StudentsListJSON < StudentList
-  def read_from_file
-    json_data = JSON.parse(File.read(self.filepath), symbolize_names: true)
-    student_array_hash = json_data.map { |json_student| Student.new(**json_student) }
-    self.student_array = student_array_hash
+class StudentsListJSON < StrategyListFile
+  def read_from_file(filepath)
+    json_data = JSON.parse(File.read(filepath), symbolize_names: true)
+    json_data.map { |json_student| Student.new(**json_student) }
   end
 
-  def write_to_file(student_array = self.student_array)
+  def write_to_file(filepath, student_array)
     student_array_hash = student_array.map do |student|
       student.instance_variables
              .reject { |var| var == :@contact }
@@ -19,7 +19,7 @@ class StudentsListJSON < StudentList
              .to_h
     end
 
-    File.open(self.filepath, 'w') do |file|
+    File.open(filepath, 'w') do |file|
       file.write(JSON.pretty_generate(student_array_hash))
     end
   end
