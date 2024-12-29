@@ -1,0 +1,11 @@
+CREATE TABLE student (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    middle_name VARCHAR(50) NOT NULL,
+    git VARCHAR(100),
+    phone VARCHAR(15),
+    email VARCHAR(100),
+    telegram VARCHAR(50),
+    birthdate DATE NOT NULL
+);
