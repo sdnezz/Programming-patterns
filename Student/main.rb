@@ -8,6 +8,7 @@ require_relative 'student_list_JSON'
 require_relative 'student_list_YAML'
 require_relative 'student_list'
 require_relative 'strategy_list_file'
+require_relative 'database/students_list_DB'
 
 # Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
@@ -94,7 +95,7 @@ students_list_json.write_to_file
 
 
 puts "Первая страница объектов StudentShort:"
-data_list = students_list_json.get_k_n_student_short_list(page: 1, amount_rows: 2)
+data_list = students_list_json.get_k_n_student_short_list(page: 1, amount_rows: 3)
 puts data_list.get_data
 
 # Используем YAML
@@ -102,3 +103,28 @@ students_list_yaml = StudentList.new(filepath: 'students.yaml', strategy: Studen
 
 # Читаем из YAML
 students_list_yaml.read_from_file
+puts "Список студентов c YAML:"
+students_list_yaml.student_array.each { |student| puts student }
+
+#======================DATABASE==============================#
+db = StudentsListDB.new(host: 'localhost', username: 'postgres', password: '123', database: 'student_db')
+
+# Пример добавления студента
+new_student = Student.new(
+  first_name: "Боря", last_name: "Голиков", middle_name: "Вячеславович",
+  git: "github.com/btagoshi", phone: "+79595959592", email: "bratgoshi@example.com", birthdate: "2002-01-01"
+)
+# db.add_student(new_student)
+
+# Пример получения студента по ID
+student = db.get_student_by_id(30)
+puts "студент с id 30"
+puts student.to_s if student
+
+# Пример получения короткого списка
+data_list = db.get_k_n_student_short_list(page: 2, amount_rows: 20)
+puts "Студенты"
+puts data_list.get_data
+
+# Удаление студента
+db.delete_student_by_id(2)
