@@ -42,6 +42,21 @@ class Student < Person
     @birthdate = Date.parse(birthdate)
   end
 
+  def self.create_from_hash(student_hash)
+    Student.new(
+      id: student_hash[:id],
+      first_name: student_hash[:first_name],
+      last_name: student_hash[:last_name],
+      middle_name: student_hash[:middle_name],
+      git: student_hash[:git],
+      phone: student_hash[:phone],
+      telegram: student_hash[:telegram],
+      email: student_hash[:email],
+      birthdate: student_hash[:birthdate]
+    )
+  end
+
+
   def <=>(other)
     if self.birthdate < other.birthdate
       return -1
