@@ -3,7 +3,7 @@ require_relative '../student'
 require_relative '../student_short'
 require_relative '../../patterns_classes/data_list_student_short'
 
-class StudentListDB
+class StudentsListDB
   attr_accessor :client_db
 
   def initialize(host:, username:, password:, database:)
