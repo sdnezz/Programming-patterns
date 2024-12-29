@@ -9,6 +9,7 @@ require_relative 'student_list_YAML'
 require_relative 'student_list'
 require_relative 'strategy_list_file'
 require_relative 'database/students_list_DB'
+require_relative 'database/student_db_operations'
 
 # Создаем несколько экземпляров класса с разными комбинациями необязательных полей
 student_example = Student.new(
@@ -109,22 +110,18 @@ students_list_yaml.student_array.each { |student| puts student }
 #======================DATABASE==============================#
 db = StudentsListDB.new(host: 'localhost', username: 'postgres', password: '123', database: 'student_db')
 
-# Пример добавления студента
-new_student = Student.new(
-  first_name: "Боря", last_name: "Голиков", middle_name: "Вячеславович",
-  git: "github.com/btagoshi", phone: "+79595959592", email: "bratgoshi@example.com", birthdate: "2002-01-01"
-)
-# db.add_student(new_student)
-
-# Пример получения студента по ID
-student = db.get_student_by_id(30)
-puts "студент с id 30"
+# Получить студента по ID
+student = db.get_student_by_id(1)
 puts student.to_s if student
 
-# Пример получения короткого списка
-data_list = db.get_k_n_student_short_list(page: 2, amount_rows: 20)
-puts "Студенты"
-puts data_list.get_data
+# Добавить нового студента
+new_student = Student.new(first_name: "Колян", last_name: "Иванов", middle_name: "Иванович", birthdate: "2006-01-01", git: "github.com/koliyan", email: "kolya@example.com")
+db.add_student(new_student)
 
-# Удаление студента
-db.delete_student_by_id(2)
+# Получить список студентов
+short_list = db.get_k_n_student_short_list(page: 2, amount_rows: 20)
+puts "Студенты 2 страница"
+puts short_list.get_data
+
+# Закрыть соединение
+db.close_connection
