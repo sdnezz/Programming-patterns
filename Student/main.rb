@@ -108,20 +108,41 @@ puts "Список студентов c YAML:"
 students_list_yaml.student_array.each { |student| puts student }
 
 #======================DATABASE==============================#
-db = StudentsListDB.new(host: 'localhost', username: 'postgres', password: '123', database: 'student_db')
 
-# Получить студента по ID
-student = db.get_student_by_id(1)
-puts student.to_s if student
+# Инициализация подключения через Singleton
+students_db = StudentsListDB.new(
+  host: 'localhost',
+  username: 'postgres',
+  password: '123',
+  database: 'student_db'
+)
 
-# Добавить нового студента
-new_student = Student.new(first_name: "Колян", last_name: "Иванов", middle_name: "Иванович", birthdate: "2006-01-01", git: "github.com/koliyan", email: "kolya@example.com")
-db.add_student(new_student)
+# Получение студента по ID
+student = students_db.get_student_by_id(1)
+puts "Найден студент: #{student}" if student
 
-# Получить список студентов
-short_list = db.get_k_n_student_short_list(page: 2, amount_rows: 20)
-puts "Студенты 2 страница"
-puts short_list.get_data
+# Получение страницы объектов StudentShort
+puts "Вторая страница"
+students_page_db = students_db.get_k_n_student_short_list(page: 2, amount_rows: 5)
+puts students_page_db.get_data
 
-# Закрыть соединение
-db.close_connection
+# Добавление нового студента
+new_student = Student.new(
+  first_name: "Ирина",
+  last_name: "Фролова",
+  middle_name: "Сергеевна",
+  git: "github.com/ifrolova",
+  phone: "+79995554433",
+  email: "ifrolova@example.com",
+  telegram: "@ifrolova",
+  birthdate: "1998-12-01"
+)
+# students_db.add_student(new_student)
+# puts "Новый студент добавлен: #{new_student.to_s}"
+
+# Удаление студента по ID
+students_db.delete_student_by_id(2)
+puts "Студент с ID 2 удален."
+
+# Закрытие соединения
+students_db.close_connection
