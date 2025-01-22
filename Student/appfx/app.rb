@@ -7,7 +7,7 @@ include Fox
 
 class MainWindow < FXMainWindow
   def initialize(app)
-    super(app, "Students", width: 1700, height: 750)
+    super(app, "Students", width: 1170, height: 750)
 
     # Создаем вкладки
     tab_placement = FXTabBook.new(self, opts: LAYOUT_FILL)
@@ -27,11 +27,11 @@ class MainWindow < FXMainWindow
   end
 
   def setup_student_list_view_areas(parent)
-    filter_area = FilterFrame.new(parent, opts: FRAME_SUNKEN | LAYOUT_FILL_X | LAYOUT_FIX_WIDTH | LAYOUT_FIX_HEIGHT, width: (self.width * 0.1).to_i, height: self.height)
+    filter_area = FilterFrame.new(parent, opts: FRAME_SUNKEN | LAYOUT_FILL_X | LAYOUT_FIX_WIDTH | LAYOUT_FIX_HEIGHT, width: (self.width * 0.15).to_i, height: self.height)
     
-    table_area = StudentTableFrame.new(parent, width: (self.width * 0.7).to_i, height: self.height)
+    table_area = StudentTableFrame.new(parent, width: (self.width * 0.85).to_i, height: self.height)
 
-    handler_area = HandlerFrame.new(parent, width: (self.width * 0.07).to_i, height: self.height)
+    handler_area = HandlerFrame.new(parent, width: (self.width * 0.1).to_i, height: self.height)
   end
 
   def create
