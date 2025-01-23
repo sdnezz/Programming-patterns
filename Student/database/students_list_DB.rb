@@ -54,6 +54,63 @@ class StudentsListDB
     self.client_db.get_student_count
   end
 
+  def get_sorted_students(column, order)
+    query = "SELECT * FROM students ORDER BY #{column} #{order.to_s.upcase}"
+    result = @db.exec(query)
+    result.map do |row|
+      Student.new(
+        id: row['id'].to_i,
+        first_name: row['first_name'],
+        last_name: row['last_name'],
+        middle_name: row['middle_name'],
+        git: row['git'],
+        phone: row['phone'],
+        email: row['email'],
+        telegram: row['telegram'],
+        birthdate: row['birthdate']
+      )
+    end
+  end
+
+  def get_filtered_students(filter_conditions, filter_texts)
+    conditions = []
+    values = []
+
+    filter_conditions.each do |key, condition|
+      case condition
+      when 1 # Да
+        conditions << "#{key} IS NOT NULL AND #{key} != ''"
+      when 2 # Нет
+        conditions << "#{key} IS NULL OR #{key} = ''"
+      end
+    end
+
+    filter_texts.each do |key, text|
+      unless text.empty?
+        conditions << "#{key} ILIKE ?"
+        values << "%#{text}%"
+      end
+    end
+
+    where_clause = conditions.empty? ? '' : "WHERE #{conditions.join(' AND ')}"
+    query = "SELECT * FROM students #{where_clause}"
+
+    result = @db.exec_params(query, values)
+    result.map do |row|
+      Student.new(
+        id: row['id'].to_i,
+        first_name: row['first_name'],
+        last_name: row['last_name'],
+        middle_name: row['middle_name'],
+        git: row['git'],
+        phone: row['phone'],
+        email: row['email'],
+        telegram: row['telegram'],
+        birthdate: row['birthdate']
+      )
+    end
+  end
+
   # Выполнение кастомного SQL-запроса
   def custom_query(query)
     self.client_db.custom_query(query)
